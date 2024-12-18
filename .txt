@@ -1,0 +1,128 @@
+Payment Processing System with RabbitMQ
+This project implements a three-step payment processing system using Node.js and RabbitMQ. The system ensures reliable message delivery between different microservices by utilizing message queues for payment processing and user notifications.
+
+Architecture Overview
+The system consists of three main services:
+
+Make Payment (Producer):
+
+Sends payment details to the Payment Queue.
+Process Payment (Consumer):
+
+Consumes messages from the Payment Queue.
+Simulates processing the payment.
+Sends a notification payload to the Notification Queue.
+Notification Service (Consumer):
+
+Consumes messages from the Notification Queue.
+Simulates sending an email notification to the user.
+Flow Diagram
+arduino
+Kodu kopyala
+User Payment Input → Payment Queue → Process Payment → Notification Queue → Notification Service → Email Sent
+Technologies Used
+Node.js: JavaScript runtime.
+amqplib: RabbitMQ client for Node.js.
+RabbitMQ: Message broker for queueing and handling messages.
+Docker: Optional, for running RabbitMQ locally.
+Project Structure
+bash
+Kodu kopyala
+project-root/
+│
+├── config/                     # RabbitMQ configuration
+│   └── rabbitmq.js             
+│
+├── producers/                  # Producers send messages to queues
+│   └── makePayment.js
+│
+├── consumers/                  # Consumers process queue messages
+│   ├── processPayment.js
+│   └── notificationService.js
+│
+├── utils/                      # Utility modules
+│   └── logger.js               # Optional: Logger utility
+│
+├── index.js                    # Main entry point
+├── package.json                # Project dependencies and scripts
+└── README.md                   # Documentation
+Setup and Installation
+1. Prerequisites
+Node.js (v14+)
+RabbitMQ (Running locally or on a server)
+Docker (Optional for RabbitMQ)
+2. Install Dependencies
+Clone the repository and run:
+
+bash
+Kodu kopyala
+npm install
+3. Start RabbitMQ
+If you don’t have RabbitMQ installed, use Docker to quickly start a RabbitMQ container:
+
+bash
+Kodu kopyala
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+RabbitMQ Management UI: http://localhost:15672
+Default credentials:
+Username: guest
+Password: guest
+4. Run the Application
+Start all services from the main file index.js:
+
+bash
+Kodu kopyala
+npm start
+How It Works
+Make Payment (Producer):
+
+Sends a message (payment payload) to the Payment Queue.
+Example payload:
+json
+Kodu kopyala
+{
+  "user": "ali@gmail.com",
+  "paymentType": "credit",
+  "cardNo": "1234123412341234"
+}
+Process Payment (Consumer):
+
+Consumes messages from the Payment Queue.
+Simulates processing the payment.
+Pushes a notification message to the Notification Queue.
+Notification Service (Consumer):
+
+Consumes messages from the Notification Queue.
+Simulates sending an email notification.
+Console Output Example:
+
+css
+Kodu kopyala
+Payment Sent to Queue: { user: 'ali@gmail.com', paymentType: 'credit' }
+Payment Processed: { user: 'ali@gmail.com', paymentType: 'credit' }
+Notification Sent: Your payment has been processed successfully.
+Scripts
+Command	Description
+npm start	Starts all services via index.js.
+npm run lint	Runs linting (optional).
+Testing the System
+Use RabbitMQ Management UI to monitor the Payment Queue and Notification Queue.
+Check console logs to verify messages being processed.
+Future Improvements
+Add a proper logging system.
+Implement a retry mechanism for failed message processing.
+Integrate a real email-sending service like Nodemailer or third-party APIs.
+Contributing
+Fork the project.
+Create a feature branch:
+bash
+Kodu kopyala
+git checkout -b feature/your-feature
+Commit changes and push to the branch:
+bash
+Kodu kopyala
+git commit -m "Add your changes"
+git push origin feature/your-feature
+Submit a pull request.
+License
+This project is licensed under the MIT License.

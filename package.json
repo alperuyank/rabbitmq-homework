@@ -1,0 +1,16 @@
+{
+  "name": "homework-2-project",
+  "version": "1.0.0",
+  "description": "homework 2 for se4458",
+  "main": "index.js",
+  "scripts": {
+    "start" : "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alper Uyaniik",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.10.5",
+    "express": "^4.21.2"
+  }
+}
